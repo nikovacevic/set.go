@@ -1,6 +1,7 @@
 package set_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/nikovacevic/set"
@@ -137,5 +138,43 @@ func TestContains(t *testing.T) {
 		if actual := s.Contains(test.e); actual != test.expected {
 			t.Errorf("Contains(%v) should return %v; returned %v", test.e, test.expected, actual)
 		}
+	}
+}
+
+func TestEquals(t *testing.T) {
+	s1 := set.NewMapSet()
+	s2 := set.NewMapSet()
+
+	if !s1.Equals(s2) {
+		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
+		t.Errorf("s1.Equals(s2) should return true. Returns false.")
+	}
+	if !s2.Equals(s1) {
+		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
+		t.Errorf("s2.Equals(s1) should return true. Returns false.")
+	}
+
+	s1.Add(1)
+	s1.Add(4)
+	s1.Add(2)
+	s1.Add(3)
+	if s1.Equals(s2) {
+		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
+		t.Errorf("s1.Equals(s2) should return false. Returns true.")
+	}
+
+	s2.Add(1)
+	s2.Add(2)
+	s2.Add(3)
+	s2.Add(4)
+	if !s1.Equals(s2) {
+		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
+		t.Errorf("s1.Equals(s2) should return true. Returns false.")
+	}
+
+	s2.Remove(3)
+	if s1.Equals(s2) {
+		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
+		t.Errorf("s1.Equals(s2) should return false. Returns true.")
 	}
 }

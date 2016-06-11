@@ -1,5 +1,10 @@
 package set
 
+import (
+	"fmt"
+	"strings"
+)
+
 // This implementation leverages the empty interface and empty struct. If you
 // are curious about why, please reference Dave Cheney's excellent blog post
 // (http://dave.cheney.net/2014/03/25/the-empty-struct) on the matter.
@@ -64,6 +69,14 @@ func (ms *MapSet) Contains(e interface{}) bool {
 // Returns true if the set contains all elements in set s and the two
 // sets are of equal size
 func (ms *MapSet) Equals(s Set) bool {
+	if s.Size() != ms.Size() {
+		return false
+	}
+	for e, _ := range *ms {
+		if !s.Contains(e) {
+			return false
+		}
+	}
 	return true
 }
 
@@ -85,4 +98,15 @@ func (ms *MapSet) Intersection(s Set) Set {
 // Returns the set of elements in either the set or the set s, but not in both
 func (ms *MapSet) Difference(s Set) Set {
 	return ms
+}
+
+func (ms *MapSet) String() string {
+	str := "{ "
+	elements := []string{}
+	for e, _ := range *ms {
+		elements = append(elements, fmt.Sprintf("%v", e))
+	}
+	str += strings.Join(elements, ", ")
+	str += " }"
+	return str
 }
