@@ -41,11 +41,12 @@ type Set interface {
 // the set. The value of the map is type struct{} because it has zero width.
 type MapSet map[interface{}]struct{}
 
+// NewMapSet creates and returns a pointer to a new MapSet instance
 func NewMapSet() *MapSet {
 	return &MapSet{}
 }
 
-// Adds e elements to the Set
+// Add adds e elements to the Set
 // returns true if the element was added to the set
 // returns false if the set already contained the element e
 func (ms *MapSet) Add(e interface{}) bool {
@@ -56,7 +57,7 @@ func (ms *MapSet) Add(e interface{}) bool {
 	return true
 }
 
-// Removes element e from the Set
+// Remove removes element e from the Set
 // returns true if the element was removed from the set
 // returns false if the set did not contain the element e
 func (ms *MapSet) Remove(e interface{}) bool {
@@ -67,7 +68,26 @@ func (ms *MapSet) Remove(e interface{}) bool {
 	return true
 }
 
-// Returns the number of elements in the set
+// Size returns the number of elements in the set
 func (ms *MapSet) Size() int {
 	return len(*ms)
+}
+
+// Clear removes all elements from the set
+// returns true if all elements were removed
+// returns false if the set was empty
+func (ms *MapSet) Clear() bool {
+	if ms.Size() == 0 {
+		return false
+	}
+	ms = NewMapSet()
+	return true
+}
+
+// Contains returns true if the set contains the element e
+func (ms *MapSet) Contains(e interface{}) bool {
+	if _, exists := (*ms)[e]; exists {
+		return true
+	}
+	return false
 }
