@@ -6,6 +6,14 @@ import (
 	"github.com/nikovacevic/set"
 )
 
+func TestInterface(t *testing.T) {
+	s := set.NewMapSet()
+
+	if _, ok := interface{}(s).(set.Set); !ok {
+		t.Errorf("MapSet should implement Set interface. It does not.")
+	}
+}
+
 var addTests = []struct {
 	e            interface{}
 	expected     bool
