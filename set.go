@@ -2,13 +2,11 @@ package set
 
 // Set describes a collection of distinct elements
 type Set interface {
-	// Creates and returns a new, empty set
-	New() *Set
-	// Adds e elements to the Set
+	// Adds element e to the Set
 	// returns true if the element was added to the set
 	// returns false if the set already contained the element e
 	Add(e interface{}) bool
-	// Adds e elements to the Set
+	// Removes element e from the Set
 	// returns true if the element was removed from the set
 	// returns false if the set did not contain the element e
 	Remove(e interface{}) bool
@@ -33,9 +31,43 @@ type Set interface {
 	Difference(s Set) Set
 }
 
+// This implementation leverages the empty interface and empty struct. If you
+// are curious about why, please reference Dave Cheney's excellent blog post
+// (http://dave.cheney.net/2014/03/25/the-empty-struct) on the matter.
+// Furthermore, struct{}{} creates a struct literal of type struct{}
+
 // MapSet implements Set. Elements of the set are represented as keys of the
 // map. Hence, the key is of type interface{} to allow any type to be added to
-// the set. The value of the set is type struct{} because that type has zero
-// width; please reference http://dave.cheney.net/2014/03/25/the-empty-struct
-// to learn about the magical empty struct.
+// the set. The value of the map is type struct{} because it has zero width.
 type MapSet map[interface{}]struct{}
+
+func NewMapSet() *MapSet {
+	return &MapSet{}
+}
+
+// Adds e elements to the Set
+// returns true if the element was added to the set
+// returns false if the set already contained the element e
+func (ms *MapSet) Add(e interface{}) bool {
+	if _, exists := (*ms)[e]; exists {
+		return false
+	}
+	(*ms)[e] = struct{}{}
+	return true
+}
+
+// Removes element e from the Set
+// returns true if the element was removed from the set
+// returns false if the set did not contain the element e
+func (ms *MapSet) Remove(e interface{}) bool {
+	if _, exists := (*ms)[e]; !exists {
+		return false
+	}
+	delete((*ms), e)
+	return true
+}
+
+// Returns the number of elements in the set
+func (ms *MapSet) Size() int {
+	return len(*ms)
+}
