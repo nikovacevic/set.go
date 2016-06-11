@@ -178,3 +178,61 @@ func TestEquals(t *testing.T) {
 		t.Errorf("s1.Equals(s2) should return false. Returns true.")
 	}
 }
+
+func TestIsSubsetOf(t *testing.T) {
+	s1 := set.NewMapSet()
+	s2 := set.NewMapSet()
+
+	if !s1.IsSubsetOf(s2) {
+		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
+		t.Errorf("s1.IsSubsetOf(s2) should return true. Returns false.")
+	}
+	if !s2.IsSubsetOf(s1) {
+		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
+		t.Errorf("s2.IsSubsetOf(s1) should return true. Returns false.")
+	}
+
+	s2.Add(1)
+	s2.Add(2)
+	s2.Add(3)
+	if !s1.IsSubsetOf(s2) {
+		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
+		t.Errorf("s1.IsSubsetOf(s2) should return true. Returns false.")
+	}
+	if s2.IsSubsetOf(s1) {
+		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
+		t.Errorf("s2.IsSubsetOf(s1) should return false. Returns true.")
+	}
+
+	s1.Add(1)
+	if !s1.IsSubsetOf(s2) {
+		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
+		t.Errorf("s1.IsSubsetOf(s2) should return true. Returns false.")
+	}
+	if s2.IsSubsetOf(s1) {
+		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
+		t.Errorf("s2.IsSubsetOf(s1) should return false. Returns true.")
+	}
+
+	s1.Add(2)
+	s1.Add(3)
+	if !s1.IsSubsetOf(s2) {
+		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
+		t.Errorf("s1.IsSubsetOf(s2) should return true. Returns false.")
+	}
+	if !s2.IsSubsetOf(s1) {
+		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
+		t.Errorf("s2.IsSubsetOf(s1) should return true. Returns falseg.")
+	}
+
+	s1.Add(4)
+	s2.Add(5)
+	if s1.IsSubsetOf(s2) {
+		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
+		t.Errorf("s1.IsSubsetOf(s2) should return fa;se. Returns true.")
+	}
+	if s2.IsSubsetOf(s1) {
+		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
+		t.Errorf("s2.IsSubsetOf(s1) should return false. Returns true.")
+	}
+}

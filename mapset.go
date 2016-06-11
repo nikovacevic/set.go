@@ -66,7 +66,7 @@ func (ms *MapSet) Contains(e interface{}) bool {
 	return false
 }
 
-// Returns true if the set contains all elements in set s and the two
+// Equals returns true if the set contains all elements in set s and the two
 // sets are of equal size
 func (ms *MapSet) Equals(s Set) bool {
 	if s.Size() != ms.Size() {
@@ -80,26 +80,35 @@ func (ms *MapSet) Equals(s Set) bool {
 	return true
 }
 
-// Returns true if the set s contains all elements in the set
+// IsSubsetOf returns true if the set s contains all elements in the set
 func (ms *MapSet) IsSubsetOf(s Set) bool {
+	if ms.Size() > s.Size() {
+		return false
+	}
+	for e, _ := range *ms {
+		if !s.Contains(e) {
+			return false
+		}
+	}
 	return true
 }
 
-// Returns the set of elements in either or both of the set and set s
+// Union returns the set of elements in either or both of the set and set s
 func (ms *MapSet) Union(s Set) Set {
 	return ms
 }
 
-// Returns the set of elements in both the set and the set s
+// Intersection returns the set of elements in both the set and the set s
 func (ms *MapSet) Intersection(s Set) Set {
 	return ms
 }
 
-// Returns the set of elements in either the set or the set s, but not in both
+// Difference returns the set of elements in either the set or the set s, but not in both
 func (ms *MapSet) Difference(s Set) Set {
 	return ms
 }
 
+// String returns a string representation of the set
 func (ms *MapSet) String() string {
 	str := "{ "
 	elements := []string{}
