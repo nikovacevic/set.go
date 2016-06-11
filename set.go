@@ -11,7 +11,7 @@ type Set interface {
 	// Adds e elements to the Set
 	// returns true if the element was removed from the set
 	// returns false if the set did not contain the element e
-	Remove(e ...interface{}) bool
+	Remove(e interface{}) bool
 	// Returns the number of elements in the set
 	Size() int
 	// Removes all elements from the set
