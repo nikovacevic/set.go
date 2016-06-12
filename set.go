@@ -1,3 +1,4 @@
+// Package set provides an interface and implementations for the set data structure
 package set
 
 // Set describes a collection of distinct elements
