@@ -41,6 +41,11 @@ Coming soon!
 This package draws ideas from the following community writing and examples:
 - http://dave.cheney.net/2014/03/25/the-empty-struct
 - https://github.com/fatih/set
+- https://github.com/deckarep/golang-set
 
 **NOTE** Currently, the implemented MapSet is not threadsafe. Once again, see other community imlementations for examples.
 
+# License
+
+The MIT License (MIT)
+Copyright (c) 2016 Niko Kovacevic
