@@ -147,11 +147,11 @@ func TestEquals(t *testing.T) {
 
 	if !s1.Equals(s2) {
 		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
-		t.Errorf("s1.Equals(s2) should return true. Returns false.")
+		t.Errorf("s1.Equals(s2) should return true; returns false.")
 	}
 	if !s2.Equals(s1) {
 		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
-		t.Errorf("s2.Equals(s1) should return true. Returns false.")
+		t.Errorf("s2.Equals(s1) should return true; returns false.")
 	}
 
 	s1.Add(1)
@@ -160,7 +160,7 @@ func TestEquals(t *testing.T) {
 	s1.Add(3)
 	if s1.Equals(s2) {
 		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
-		t.Errorf("s1.Equals(s2) should return false. Returns true.")
+		t.Errorf("s1.Equals(s2) should return false; returns true.")
 	}
 
 	s2.Add(1)
@@ -169,13 +169,13 @@ func TestEquals(t *testing.T) {
 	s2.Add(4)
 	if !s1.Equals(s2) {
 		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
-		t.Errorf("s1.Equals(s2) should return true. Returns false.")
+		t.Errorf("s1.Equals(s2) should return true; returns false.")
 	}
 
 	s2.Remove(3)
 	if s1.Equals(s2) {
 		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
-		t.Errorf("s1.Equals(s2) should return false. Returns true.")
+		t.Errorf("s1.Equals(s2) should return false; returns true.")
 	}
 }
 
@@ -185,11 +185,11 @@ func TestIsSubsetOf(t *testing.T) {
 
 	if !s1.IsSubsetOf(s2) {
 		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
-		t.Errorf("s1.IsSubsetOf(s2) should return true. Returns false.")
+		t.Errorf("s1.IsSubsetOf(s2) should return true; returns false.")
 	}
 	if !s2.IsSubsetOf(s1) {
 		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
-		t.Errorf("s2.IsSubsetOf(s1) should return true. Returns false.")
+		t.Errorf("s2.IsSubsetOf(s1) should return true; returns false.")
 	}
 
 	s2.Add(1)
@@ -197,42 +197,89 @@ func TestIsSubsetOf(t *testing.T) {
 	s2.Add(3)
 	if !s1.IsSubsetOf(s2) {
 		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
-		t.Errorf("s1.IsSubsetOf(s2) should return true. Returns false.")
+		t.Errorf("s1.IsSubsetOf(s2) should return true; returns false.")
 	}
 	if s2.IsSubsetOf(s1) {
 		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
-		t.Errorf("s2.IsSubsetOf(s1) should return false. Returns true.")
+		t.Errorf("s2.IsSubsetOf(s1) should return false; returns true.")
 	}
 
 	s1.Add(1)
 	if !s1.IsSubsetOf(s2) {
 		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
-		t.Errorf("s1.IsSubsetOf(s2) should return true. Returns false.")
+		t.Errorf("s1.IsSubsetOf(s2) should return true; returns false.")
 	}
 	if s2.IsSubsetOf(s1) {
 		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
-		t.Errorf("s2.IsSubsetOf(s1) should return false. Returns true.")
+		t.Errorf("s2.IsSubsetOf(s1) should return false; returns true.")
 	}
 
 	s1.Add(2)
 	s1.Add(3)
 	if !s1.IsSubsetOf(s2) {
 		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
-		t.Errorf("s1.IsSubsetOf(s2) should return true. Returns false.")
+		t.Errorf("s1.IsSubsetOf(s2) should return true; returns false.")
 	}
 	if !s2.IsSubsetOf(s1) {
 		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
-		t.Errorf("s2.IsSubsetOf(s1) should return true. Returns falseg.")
+		t.Errorf("s2.IsSubsetOf(s1) should return true; returns false.")
 	}
 
 	s1.Add(4)
 	s2.Add(5)
 	if s1.IsSubsetOf(s2) {
 		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
-		t.Errorf("s1.IsSubsetOf(s2) should return fa;se. Returns true.")
+		t.Errorf("s1.IsSubsetOf(s2) should return false; returns true.")
 	}
 	if s2.IsSubsetOf(s1) {
 		fmt.Printf("s1: %s\ns2: %s\n", s1, s2)
-		t.Errorf("s2.IsSubsetOf(s1) should return false. Returns true.")
+		t.Errorf("s2.IsSubsetOf(s1) should return false; returns true.")
+	}
+}
+
+func TestUnion(t *testing.T) {
+	s1 := set.NewMapSet()
+	s1.Add(1)
+	s1.Add(2)
+	s1.Add(3)
+
+	s2 := set.NewMapSet()
+	s2.Add(2)
+	s2.Add(4)
+	s2.Add(6)
+
+	u := s1.Union(s2)
+
+	expected := set.NewMapSet()
+	expected.Add(1)
+	expected.Add(2)
+	expected.Add(3)
+	expected.Add(4)
+	expected.Add(6)
+
+	if !u.Equals(expected) {
+		t.Errorf("Union() should create expected: %s; actual: %s", expected, u)
+	}
+}
+
+func TestPipe(t *testing.T) {
+	s1 := set.NewMapSet()
+	s1.Add(1)
+	s1.Add(2)
+	s1.Add(3)
+
+	s2 := set.NewMapSet()
+
+	ch := make(chan interface{})
+	go s1.Pipe(ch)
+
+	for e := range ch {
+		s2.Add(e)
+		// Simulate RPC
+		// time.Sleep(time.Second)
+	}
+
+	if !s1.Equals(s2) {
+		t.Errorf("Pipe() completed; s1.Equals(s2) should return true; returns false.")
 	}
 }

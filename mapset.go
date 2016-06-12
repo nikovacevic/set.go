@@ -95,7 +95,11 @@ func (ms *MapSet) IsSubsetOf(s Set) bool {
 
 // Union returns the set of elements in either or both of the set and set s
 func (ms *MapSet) Union(s Set) Set {
-	return ms
+	u := s
+	for e, _ := range *ms {
+		u.Add(e)
+	}
+	return u
 }
 
 // Intersection returns the set of elements in both the set and the set s
@@ -106,6 +110,15 @@ func (ms *MapSet) Intersection(s Set) Set {
 // Difference returns the set of elements in either the set or the set s, but not in both
 func (ms *MapSet) Difference(s Set) Set {
 	return ms
+}
+
+// Pipe communicates each element of the set exactly once on the given channel,
+// then closes the channel
+func (ms *MapSet) Pipe(ch chan interface{}) {
+	for e, _ := range *ms {
+		ch <- e
+	}
+	close(ch)
 }
 
 // String returns a string representation of the set
