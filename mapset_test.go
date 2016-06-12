@@ -262,7 +262,7 @@ func TestUnion(t *testing.T) {
 	}
 }
 
-func TestPipe(t *testing.T) {
+func TestChannel(t *testing.T) {
 	s1 := set.NewMapSet()
 	s1.Add(1)
 	s1.Add(2)
@@ -270,13 +270,13 @@ func TestPipe(t *testing.T) {
 
 	s2 := set.NewMapSet()
 
-	for e := range s1.Pipe() {
+	for e := range s1.Channel() {
 		s2.Add(e)
 		// Simulate RPC
 		// time.Sleep(time.Second)
 	}
 
 	if !s1.Equals(s2) {
-		t.Errorf("Pipe() completed; s1.Equals(s2) should return true; returns false.")
+		t.Errorf("Channel() completed; s1.Equals(s2) should return true; returns false.")
 	}
 }
