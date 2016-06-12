@@ -43,7 +43,7 @@ This package draws ideas from the following community writing and examples:
 - https://github.com/fatih/set
 - https://github.com/deckarep/golang-set
 
-**NOTE** Currently, the implemented MapSet is not threadsafe. Once again, see other community imlementations for examples.
+**NOTE** Currently, the implemented MapSet is not threadsafe. Once again, see other community implementations for examples.
 
 # License
 
