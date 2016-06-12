@@ -104,12 +104,26 @@ func (ms *MapSet) Union(s Set) Set {
 
 // Intersection returns the set of elements in both the set and the set s
 func (ms *MapSet) Intersection(s Set) Set {
-	return ms
+	u := ms
+	for e, _ := range *u {
+		if !s.Contains(e) {
+			u.Remove(e)
+		}
+	}
+	return u
 }
 
 // Difference returns the set of elements in either the set or the set s, but not in both
 func (ms *MapSet) Difference(s Set) Set {
-	return ms
+	u := s
+	for e, _ := range *ms {
+		if u.Contains(e) {
+			u.Remove(e)
+		} else {
+			u.Add(e)
+		}
+	}
+	return u
 }
 
 // Channel communicates each element of the set exactly once on the given channel,

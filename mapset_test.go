@@ -262,6 +262,51 @@ func TestUnion(t *testing.T) {
 	}
 }
 
+func TestIntersection(t *testing.T) {
+	s1 := set.NewMapSet()
+	s1.Add(1)
+	s1.Add(2)
+	s1.Add(3)
+
+	s2 := set.NewMapSet()
+	s2.Add(2)
+	s2.Add(4)
+	s2.Add(6)
+
+	u := s1.Intersection(s2)
+
+	expected := set.NewMapSet()
+	expected.Add(2)
+
+	if !u.Equals(expected) {
+		t.Errorf("Intersection() should create expected: %s; actual: %s", expected, u)
+	}
+}
+
+func TestDifference(t *testing.T) {
+	s1 := set.NewMapSet()
+	s1.Add(1)
+	s1.Add(2)
+	s1.Add(3)
+
+	s2 := set.NewMapSet()
+	s2.Add(2)
+	s2.Add(4)
+	s2.Add(6)
+
+	u := s1.Difference(s2)
+
+	expected := set.NewMapSet()
+	expected.Add(1)
+	expected.Add(3)
+	expected.Add(4)
+	expected.Add(6)
+
+	if !u.Equals(expected) {
+		t.Errorf("Difference() should create expected: %s; actual: %s", expected, u)
+	}
+}
+
 func TestChannel(t *testing.T) {
 	s1 := set.NewMapSet()
 	s1.Add(1)
