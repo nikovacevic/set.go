@@ -2,6 +2,7 @@ package set_test
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 
 	"github.com/nikovacevic/set"
@@ -323,5 +324,20 @@ func TestChannel(t *testing.T) {
 
 	if !s1.Equals(s2) {
 		t.Errorf("Channel() completed; s1.Equals(s2) should return true; returns false.")
+	}
+}
+
+func TestSlice(t *testing.T) {
+	s1 := set.NewMapSet()
+	s1.Add(1)
+	s1.Add(2)
+	s1.Add(3)
+
+	expected := []interface{}{1, 2, 3}
+
+	// TODO determine if Slice() will deterministically create the same
+	// slice each time in the same order that elements were added.
+	if actual := s1.Slice(); !reflect.DeepEqual(actual, expected) {
+		t.Errorf("Slice() should return %v; returns %v.", expected, actual)
 	}
 }

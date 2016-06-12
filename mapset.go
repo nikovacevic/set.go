@@ -139,6 +139,15 @@ func (ms *MapSet) Channel() <-chan interface{} {
 	return ch
 }
 
+// Slice returns a slice containing each element of the set exactly once
+func (ms *MapSet) Slice() []interface{} {
+	s := []interface{}{}
+	for e, _ := range *ms {
+		s = append(s, e)
+	}
+	return s
+}
+
 // String returns a string representation of the set
 func (ms *MapSet) String() string {
 	str := "{ "
