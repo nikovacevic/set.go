@@ -270,10 +270,7 @@ func TestPipe(t *testing.T) {
 
 	s2 := set.NewMapSet()
 
-	ch := make(chan interface{})
-	go s1.Pipe(ch)
-
-	for e := range ch {
+	for e := range s1.Pipe() {
 		s2.Add(e)
 		// Simulate RPC
 		// time.Sleep(time.Second)

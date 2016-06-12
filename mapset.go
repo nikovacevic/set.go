@@ -114,11 +114,15 @@ func (ms *MapSet) Difference(s Set) Set {
 
 // Pipe communicates each element of the set exactly once on the given channel,
 // then closes the channel
-func (ms *MapSet) Pipe(ch chan interface{}) {
-	for e, _ := range *ms {
-		ch <- e
-	}
-	close(ch)
+func (ms *MapSet) Pipe() <-chan interface{} {
+	ch := make(chan interface{})
+	go func() {
+		for e, _ := range *ms {
+			ch <- e
+		}
+		close(ch)
+	}()
+	return ch
 }
 
 // String returns a string representation of the set
