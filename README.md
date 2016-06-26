@@ -47,5 +47,5 @@ This package draws ideas from the following community writing and examples:
 
 # License
 
-The MIT License (MIT)
+The MIT License (MIT)  
 Copyright (c) 2016 Niko Kovacevic
